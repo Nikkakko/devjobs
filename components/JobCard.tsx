@@ -7,31 +7,16 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-import { Prisma } from '@prisma/client';
+import { Job, Prisma } from '@prisma/client';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export interface JobProps {
-  job: {
-    id: string;
-    userId: string;
-    company: string;
-    logo: string;
-    logoBackground: string;
-    position: string;
-    contract: string;
-    location: string;
-    website: string;
-    apply: string;
-    description: string;
-    requirements: Prisma.JsonValue;
-    role: Prisma.JsonValue;
-    createdAt: Date;
-    updatedAt: Date;
-  };
-}
-const JobCard = ({ job }: JobProps) => {
+type Props = {
+  job: Job & {};
+};
+
+const JobCard = ({ job }: Props) => {
   const {
     company,
     logo,

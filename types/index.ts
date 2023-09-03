@@ -4,6 +4,7 @@ export interface JobProps {
   job: {
     id: string;
     userId: string;
+    userName: string;
     company: string;
     logo: string;
     logoBackground: string;

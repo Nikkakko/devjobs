@@ -38,7 +38,7 @@ const JobDetails = ({ job }: JobProps) => {
             hover:scale-105 transform transition-all duration-200
             text-muted-foreground
           '
-            onClick={() => router.push(`/jobs/${job?.id}/edit`)}
+            onClick={() => router.push(`/jobs/new/${job?.id}`)}
           />
         )}
       </div>
@@ -58,6 +58,9 @@ const JobDetails = ({ job }: JobProps) => {
           <div className='flex flex-col'>
             <CardTitle>{job?.company}</CardTitle>
             <CardDescription>{job?.website}</CardDescription>
+            <CardDescription>
+              Created By {job?.userName || 'unknown'}
+            </CardDescription>
           </div>
         </CardHeader>
 

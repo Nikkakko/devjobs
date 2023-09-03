@@ -17,7 +17,7 @@ const Navbar = () => {
 
         {user !== null && (
           <Button asChild>
-            <Link href='/jobs/new'>Post a Job</Link>
+            <Link href='/jobs/new/5f4e60bfb76a3a28cc2b9183'>Post a Job</Link>
           </Button>
         )}
 
