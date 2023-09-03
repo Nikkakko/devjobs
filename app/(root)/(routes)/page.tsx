@@ -2,9 +2,10 @@ import SearchInput from '@/components/SearchInput';
 import prismadb from '@/lib/prismadb';
 
 export default async function Home() {
-  const jobs = await prismadb.job.findMany();
+  // const jobs = await prismadb.job.findMany();
 
-  console.log(jobs);
+  // console.log(jobs);
+
   return (
     <div className='h-full p-4 space-y-2'>
       <SearchInput />

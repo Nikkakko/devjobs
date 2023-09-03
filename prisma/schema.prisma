@@ -10,45 +10,54 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId String   @unique 
-  email   String   @unique
-  name    String?
-  job     Job[]
-
-}
+// model User {
+//   id      String   @id @default(auto()) @map("_id") @db.ObjectId
+//   userId String   @unique 
+//   email   String   @unique
+//   name    String?
+//   job     Job[]
+// }
 
 
 model Job {
   id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String 
   company         String
   logo            String
   logoBackground  String
   position        String
-  postedAt        String?
+  postedAt        DateTime @default(now())
   contract        String
   location        String
   website         String
   apply           String
   description     String
-  requirements    Requirements?
-  role            Role?
-  user            User      @relation(fields: [id], references: [id])
-}
+  requirements    Requirements[]
+  role            Role[]
+  
 
+}
 
 model Requirements {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content String
   items   String[]
-  content String
-  job     Job     @relation(fields: [id], references: [id])
-}
-
-model Role {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  content String
-  items  String[]
-  job     Job     @relation(fields: [id], references: [id])
+  job       Job      @relation(fields: [jobId], references: [id])
+  jobId    String @db.ObjectId
+  
   
 }
+
+
+
+model Role {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content String
+  items   String[]
+  job       Job      @relation(fields: [jobId], references: [id])
+  jobId    String @db.ObjectId
+ 
+}
+
+
+
