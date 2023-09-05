@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/lib/utils';
 import {
   Card,
   CardContent,
@@ -11,6 +12,7 @@ import { Job, Prisma } from '@prisma/client';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 type Props = {
   job: Job & {};
@@ -29,7 +31,7 @@ const JobCard = ({ job }: Props) => {
   const router = useRouter();
 
   const dateCreated = moment(createdAt).fromNow();
-
+  const { theme } = useTheme();
   const handleClick = () => {
     router.push(`/jobs/${job.id}`);
   };
@@ -42,10 +44,17 @@ const JobCard = ({ job }: Props) => {
       onClick={handleClick}
     >
       <div
-        className='absolute w-12 h-12 rounded-full -top-6 right-2 flex items-center justify-center'
-        style={{ backgroundColor: logoBackground }}
+        className={cn(
+          'absolute w-12 h-12 border border-slate-500 bg-slate-900 rounded-full -top-6 right-2 flex items-center justify-center'
+        )}
       >
-        <Image src={logo} alt={company} width={30} height={30} />
+        <Image
+          src={logo}
+          alt={company}
+          width={30}
+          height={30}
+          className='rounded-full object-cover'
+        />
       </div>
 
       <CardHeader className=''>

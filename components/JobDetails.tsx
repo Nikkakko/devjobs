@@ -11,9 +11,10 @@ import Link from 'next/link';
 import moment from 'moment';
 import { JobProps } from '@/types';
 import Image from 'next/image';
-import { useAuth, useUser } from '@clerk/nextjs';
+import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Pencil } from 'lucide-react';
+import { ArrowLeft, Pencil, Trash } from 'lucide-react';
+import DeleteAlert from './delete-alert';
 
 const JobDetails = ({ job }: JobProps) => {
   const { userId } = useAuth();
@@ -27,20 +28,25 @@ const JobDetails = ({ job }: JobProps) => {
         <ArrowLeft
           className='cursor-pointer 
             hover:scale-105 transform transition-all duration-200
+          hover:text-background
             text-muted-foreground
           '
           onClick={() => router.back()}
         />
-
-        {userId === job?.userId && (
-          <Pencil
-            className='cursor-pointer 
-            hover:scale-105 transform transition-all duration-200
-            text-muted-foreground
+        <div className='flex space-x-2'>
+          {userId === job?.userId && (
+            <Pencil
+              className='cursor-pointer 
+          hover:scale-105 transform transition-all duration-200
+          hover:text-background
+          text-muted-foreground
           '
-            onClick={() => router.push(`/jobs/new/${job?.id}`)}
-          />
-        )}
+              onClick={() => router.push(`/jobs/new/${job?.id}`)}
+            />
+          )}
+
+          {userId === job?.userId && <DeleteAlert id={job?.id} />}
+        </div>
       </div>
       <Card className='flex flex-col md:flex-row md:justify-between md:items-center'>
         <CardHeader className='flex flex-row space-x-4'>

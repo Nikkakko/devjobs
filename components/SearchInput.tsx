@@ -1,24 +1,53 @@
 'use client';
 import { Input } from './ui/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, MapPin } from 'lucide-react';
 import useDebounce from '@/hooks/useDebounce';
-import { Separator } from './ui/separator';
 import { Checkbox } from './ui/checkbox';
-import { Button } from './ui/button';
+import { useRouter, useSearchParams } from 'next/navigation';
+import qs from 'query-string';
 
 const SearchInput = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [value, setValue] = useState('');
   const [location, setLocation] = useState('');
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
+  const contract = searchParams.get('contract');
+  const company = searchParams.get('company');
+  const locationParam = searchParams.get('location');
+
   const debouncedValue = useDebounce(value, 500);
+  const locationDebouncedValue = useDebounce(location, 500);
+
+  useEffect(() => {
+    const query = {
+      company: debouncedValue,
+      location: locationDebouncedValue,
+      contract: isCheckboxChecked ? 'Full Time' : null,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: window.location.href,
+        query,
+      },
+      {
+        skipEmptyString: true,
+        skipNull: true,
+      }
+    );
+
+    router.push(url);
+  }, [debouncedValue, locationDebouncedValue, isCheckboxChecked, router]);
+
   return (
     <div className='relative w-full flex items-center justify-between bg-background rounded-sm shadow-md px-2'>
       <div className='flex items-center '>
         <Search />
         <Input
-          placeholder='Filter by title, companies, expertise...'
+          placeholder='Filter by company,position...'
           className=' border-none focus-visible:ring-0 focus-visible:ring-offset-0'
           value={value}
           onChange={e => setValue(e.target.value)}
@@ -41,10 +70,6 @@ const SearchInput = () => {
           onCheckedChange={(checked: boolean) => setIsCheckboxChecked(checked)}
         />
         <label className='text-sm text-gray-500'>Full Time Only</label>
-      </div>
-
-      <div className='flex justify-end'>
-        <Button size='sm'>Search</Button>
       </div>
     </div>
   );

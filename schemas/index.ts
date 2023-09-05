@@ -2,7 +2,6 @@ import { Prisma } from '@prisma/client';
 import * as z from 'zod';
 
 export const formSchema = z.object({
-  userName: z.string().min(3),
   company: z.string().min(3),
   logo: z.string().url(),
   logoBackground: z.string(),
