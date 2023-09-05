@@ -8,11 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card';
-import { Job, Prisma } from '@prisma/client';
 import moment from 'moment';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
+import { Job } from '@prisma/client';
 
 type Props = {
   job: Job & {};
@@ -31,7 +30,7 @@ const JobCard = ({ job }: Props) => {
   const router = useRouter();
 
   const dateCreated = moment(createdAt).fromNow();
-  const { theme } = useTheme();
+
   const handleClick = () => {
     router.push(`/jobs/${job.id}`);
   };
@@ -53,7 +52,7 @@ const JobCard = ({ job }: Props) => {
           alt={company}
           width={30}
           height={30}
-          className='rounded-full object-cover'
+          className='rounded-full object-cover w-auto h-auto'
         />
       </div>
 
