@@ -6,6 +6,7 @@ import useDebounce from '@/hooks/useDebounce';
 import { Checkbox } from './ui/checkbox';
 import { useRouter, useSearchParams } from 'next/navigation';
 import qs from 'query-string';
+import { Separator } from './ui/separator';
 
 const SearchInput = () => {
   const router = useRouter();
@@ -53,6 +54,7 @@ const SearchInput = () => {
           onChange={e => setValue(e.target.value)}
         />
       </div>
+      <Separator className='hidden md:block' orientation='vertical' />
 
       <div className='hidden md:flex items-center '>
         <MapPin />

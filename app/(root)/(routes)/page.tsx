@@ -1,4 +1,5 @@
 import JobCard from '@/components/JobCard';
+
 import SearchInput from '@/components/SearchInput';
 import prismadb from '@/lib/prismadb';
 import { auth } from '@clerk/nextjs';
@@ -8,10 +9,14 @@ interface Props {
     company: string;
     contract: string;
     location: string;
+    take: string;
+    skip: string;
   };
 }
 
 export default async function Home({ searchParams }: Props) {
+  const { userId } = auth();
+
   const jobs = await prismadb.job.findMany({
     where: {
       company: {
@@ -31,7 +36,6 @@ export default async function Home({ searchParams }: Props) {
       createdAt: 'desc',
     },
   });
-  const { userId } = auth();
 
   return (
     <div className='h-full p-4 space-y-2'>
@@ -55,6 +59,12 @@ export default async function Home({ searchParams }: Props) {
           </p>
         )}
       </div>
+
+      {jobs.length > 0 && jobs.length && (
+        <p className='text-center text-gray-500'>
+          Showing all {jobs.length} jobs
+        </p>
+      )}
     </div>
   );
 }
