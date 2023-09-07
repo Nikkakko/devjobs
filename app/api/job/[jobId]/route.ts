@@ -34,7 +34,6 @@ export async function PATCH(
 
     // check if every field is filled in
     if (
-      !userName ||
       !company ||
       !logo ||
       !position ||

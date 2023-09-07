@@ -115,9 +115,15 @@ const JobsForm = ({ initialData }: Props) => {
         await axios.post('/api/job', values);
       }
 
-      toast({
-        description: 'Your job has been successfully created.',
-      });
+      if (initialData) {
+        toast({
+          description: 'Your job has been successfully updated.',
+        });
+      } else {
+        toast({
+          description: 'Your job has been successfully created.',
+        });
+      }
 
       router.refresh();
       router.push('/');
